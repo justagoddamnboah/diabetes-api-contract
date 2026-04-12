@@ -16,7 +16,7 @@ public class InMemoryStorage {
     public final Map<Long, AppointmentResponse> appointments = new ConcurrentHashMap<>();
 
     public final AtomicLong patientSequence = new AtomicLong(0);
-    public final AtomicLong appointmentSequence = new AtomicLong(0);
+    public final AtomicLong appointmentSequence = new AtomicLong(1);
 
     @PostConstruct
     public void init() {
@@ -31,13 +31,24 @@ public class InMemoryStorage {
 
         patients.put(patient1.getId(), patient1);
 
+        PatientResponse patient2 = PatientResponse.builder()
+            .id(patientSequence.incrementAndGet())
+            .lastName("Петров")
+            .firstName("Петр")
+            .middleName("Петрович")
+            .fullName("Петров Петр Петрович")
+            .age(45)
+            .build();
+
+        patients.put(patient2.getId(), patient2);
+
         long appId1 = appointmentSequence.incrementAndGet();
         appointments.put(appId1, AppointmentResponse.builder()
             .id(appId1)
             .patient(patient1)
             .appointmentTime("2025-06-17 12:00:00")
-            .bloodSugar(0)
-            .onDiet(true)
+            .bloodSugar(5.5f)
+            .onDiet(false)
             .fasting(true)
             .createdAt(LocalDateTime.now())
             .build());

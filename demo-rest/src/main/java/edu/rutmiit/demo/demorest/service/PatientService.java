@@ -74,7 +74,10 @@ public class PatientService {
     }
 
     public PatientResponse update(Long id, PatientRequest request) {
-        String fullName = request.firstName() + " " + request.lastName() + " " + request.middleName();
+        String fullName = request.lastName() + " " + request.firstName();
+        if (request.middleName() != null) {
+            fullName += " " +  request.middleName();
+        }
         PatientResponse updatedPatient = PatientResponse.builder()
             .id(id)
             .lastName(request.lastName())
@@ -92,7 +95,10 @@ public class PatientService {
         String newFirstName = request.firstName() != null ? request.firstName() : existing.getFirstName();
         String newLastName = request.lastName() != null ? request.lastName() : existing.getLastName();
         String newMiddleName = request.middleName() != null ? request.middleName() : existing.getMiddleName();
-        String newFullName = newFirstName + " " + newLastName;
+        String newFullName = newLastName + " " + newFirstName;
+        if (newMiddleName != null) {
+            newFullName += " " + newMiddleName;
+        }
         PatientResponse updated = PatientResponse.builder()
                 .id(id)
                 .firstName(newFirstName)
