@@ -83,6 +83,11 @@ public class PatientController implements PatientApi {
     }
 
     @Override
+    public EntityModel<PatientResponse> recalculateAppsCount(Long id) {
+        return patientModelAssembler.toModel(patientService.recalculateAppsCount(id));
+    }
+
+    @Override
     public PagedModel<EntityModel<PatientResponse>> searchByName(String query, int page, int size) {
         PagedResponse<PatientResponse> paged = patientService.searchByName(query, page, size);
         Page<PatientResponse> singlePage = new PageImpl<>(

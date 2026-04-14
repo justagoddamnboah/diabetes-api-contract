@@ -126,6 +126,18 @@ public interface PatientApi {
         @Parameter(description = "Размер страницы", example = "20") @RequestParam(defaultValue = "20") int size
     );
 
+    @Operation(
+        summary = "Вывести пациента и количество его приемов",
+        description = "Возвращает пациента и количество его приемов.",
+        security = @SecurityRequirement(name = DiabetesApiContractConfig.SECURITY_SCHEME_BEARER)
+    )
+    @ApiResponse(responseCode = "200", description = "Пациент найден")
+    @ApiResponse(responseCode = "404", description = "Пациенты не найден",
+        content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @GetMapping("/{id}/appCount")
+    EntityModel<PatientResponse> recalculateAppsCount(
+        @Parameter(description = "ID Пациента", required = true, example = "1") @PathVariable Long id
+    );
 
     @Operation(
             summary = "Приемы пациента (суб-ресурс)",

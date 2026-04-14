@@ -33,4 +33,7 @@ public class PatientResponse extends RepresentationModel<PatientResponse> {
 
     @Schema(description = "Возраст пациента", example = "45")
     private final Integer age;
+
+    @Schema(description = "Количество приемов", example = "4")
+    private final Integer appCount;
 }

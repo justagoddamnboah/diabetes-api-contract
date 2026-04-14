@@ -62,6 +62,7 @@ public class AppointmentService {
             .createdAt(LocalDateTime.now())
             .build();
         storage.appointments.put(id, appointment);
+        patientService.recalculateAppsCount(patient.getId());
         return appointment;
     }
 
@@ -105,11 +106,15 @@ public class AppointmentService {
     }
 
     public void deleteAppointment(Long id) {
+        AppointmentResponse appointment = storage.appointments.get(id);
+        Long patientId = appointment.getPatient().getId();
         findAppointmentById(id);
         storage.appointments.remove(id);
+        patientService.recalculateAppsCount(patientId);
     }
 
     public void deleteAppointmentsByPatientId(Long patientId) {
+        patientService.recalculateAppsCount(patientId);
         List<Long> toDelete = storage.appointments.values().stream()
             .filter(p -> p.getPatient() != null && p.getPatient().getId().equals(patientId))
             .map(AppointmentResponse::getId)

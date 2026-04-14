@@ -55,6 +55,26 @@ public class PatientService {
         return new PagedResponse<>(content, page, size, totalElements, totalPages, page >= totalPages - 1);
     }
 
+    public PatientResponse recalculateAppsCount(Long patientId) {
+        PatientResponse owner = findById(patientId);
+        int appCount = storage.appointments.values().stream()
+            .filter(appointment -> appointment.getPatient().getId().equals(patientId))
+            .toList()
+            .size();
+        PatientResponse updated = PatientResponse.builder()
+            .id(owner.getId())
+            .firstName(owner.getFirstName())
+            .lastName(owner.getLastName())
+            .middleName(owner.getMiddleName())
+            .fullName(owner.getFullName())
+            .age(owner.getAge())
+            .appCount(appCount)
+            .build();
+
+        storage.patients.put(patientId, updated);
+        return updated;
+    }
+
     public PatientResponse create(PatientRequest request) {
         long id = storage.patientSequence.incrementAndGet();
         String fullName = request.firstName() + " " + request.lastName();
