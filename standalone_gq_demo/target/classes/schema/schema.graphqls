@@ -1,0 +1,38 @@
+type Query {
+    shows(titleFilter: String): [Show]
+    show(id: ID!): Show
+}
+
+type Mutation {
+    addShow(show: SubmittedShow!): Show
+    deleteShow(id: ID!): Boolean
+}
+
+type Director {
+    id: ID!
+    name: String!
+}
+
+type Show {
+    id: ID!
+    title: String!
+    releaseYear: Int!
+    genre: Genre
+    rating: Float
+    director: Director
+}
+
+input SubmittedShow {
+    title: String!
+    releaseYear: Int!
+    genre: Genre
+    directorId: ID
+}
+
+enum Genre {
+    DRAMA
+    COMEDY
+    THRILLER
+    SCIFI
+    DOCUMENTARY
+}

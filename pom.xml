@@ -24,6 +24,7 @@
     <modules>
         <module>diabetes-api-contract</module>
         <module>demo-rest</module>
+        <module>standalone_gq_demo</module>
     </modules>
 
 </project>

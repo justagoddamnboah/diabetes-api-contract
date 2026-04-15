@@ -1,9 +1,8 @@
 package edu.rutmiit.demo.demorest.exception;
 
-import edu.rutmiit.demo.booksapicontract.dto.ErrorResponse;
-import edu.rutmiit.demo.booksapicontract.exception.IsbnAlreadyExistsException;
-import edu.rutmiit.demo.booksapicontract.exception.ResourceNotFoundException;
+import edu.rutmiit.demo.diabetesapicontract.dto.ErrorResponse;
 import edu.rutmiit.demo.diabetesapicontract.exception.AppointmentTimeAlreadyExistsException;
+import edu.rutmiit.demo.diabetesapicontract.exception.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +33,7 @@ public class GlobalExceptionHandler {
                 ));
     }
 
-    @ExceptionHandler(IsbnAlreadyExistsException.class)
+    @ExceptionHandler(AppointmentTimeAlreadyExistsException.class)
     public ResponseEntity<ErrorResponse> handleAppTimeConflict(AppointmentTimeAlreadyExistsException ex,
                                                                HttpServletRequest req) {
         return ResponseEntity
@@ -81,7 +80,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleAll(Exception ex, HttpServletRequest req) {
-        // Место для логирования: log.error("Unexpected error", ex);
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ErrorResponse(
