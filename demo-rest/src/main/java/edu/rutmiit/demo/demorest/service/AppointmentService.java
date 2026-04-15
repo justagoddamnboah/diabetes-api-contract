@@ -115,12 +115,12 @@ public class AppointmentService {
     }
 
     public void deleteAppointmentsByPatientId(Long patientId) {
-        patientService.recalculateAppsCount(patientId);
         List<Long> toDelete = storage.appointments.values().stream()
             .filter(p -> p.getPatient() != null && p.getPatient().getId().equals(patientId))
             .map(AppointmentResponse::getId)
             .toList();
         toDelete.forEach(storage.appointments::remove);
+        patientService.recalculateAppsCount(patientId);
     }
 
     private void validateAppointmentTime(String appointmentTime, Long currentAppointmentId) {

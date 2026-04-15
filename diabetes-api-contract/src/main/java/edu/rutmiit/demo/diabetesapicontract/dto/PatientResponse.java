@@ -10,7 +10,7 @@ import org.springframework.hateoas.server.core.Relation;
 
 @Getter
 @Builder
-@EqualsAndHashCode(callSuper = false) // не включаем HATEOAS-ссылки в сравнение equals
+@EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Relation(collectionRelation = "patients", itemRelation = "patient")
 @Schema(description = "Информация о пациенте")

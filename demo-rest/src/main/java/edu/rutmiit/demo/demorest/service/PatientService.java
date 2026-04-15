@@ -37,6 +37,7 @@ public class PatientService {
     }
 
     public PatientResponse findById(Long id) {
+        recalculateAppsCount(id);
         return Optional.ofNullable(storage.patients.get(id))
                 .orElseThrow(() -> new ResourceNotFoundException("Patient", id));
     }
@@ -56,7 +57,7 @@ public class PatientService {
     }
 
     public PatientResponse recalculateAppsCount(Long patientId) {
-        PatientResponse owner = findById(patientId);
+        PatientResponse owner = storage.patients.get(patientId);
         int appCount = storage.appointments.values().stream()
             .filter(appointment -> appointment.getPatient().getId().equals(patientId))
             .toList()
