@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -130,5 +131,15 @@ public class AppointmentService {
             .ifPresent(a -> {
                 throw new AppointmentTimeAlreadyExistsException(appointmentTime);
             });
+    }
+
+    public List<AppSummaryResponse> getAppsSummary() {
+        return storage.appointments.values().stream()
+            .map(app -> new AppSummaryResponse(
+                app.getId(),
+                app.getPatient(),
+                app.getAppointmentTime()
+            ))
+            .collect(Collectors.toList());
     }
 }

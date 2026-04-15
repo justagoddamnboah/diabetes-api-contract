@@ -17,6 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Tag(name = "Appointments", description = "Управление приемами")
 @RequestMapping(
         value = "/api/appointments",
@@ -120,4 +122,8 @@ public interface AppointmentApi {
     void deleteAppointment(
             @Parameter(description = "ID приема", required = true, example = "1") @PathVariable Long id
     );
+
+    @Operation(summary = "Краткий список всех приемов (без деталей)")
+    @GetMapping("/summary")
+    List<EntityModel<AppSummaryResponse>> getAllAppsSummary();
 }

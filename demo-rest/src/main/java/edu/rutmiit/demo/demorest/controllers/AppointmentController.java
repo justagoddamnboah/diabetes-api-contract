@@ -1,5 +1,6 @@
 package edu.rutmiit.demo.demorest.controllers;
 
+import edu.rutmiit.demo.demorest.assemblers.AppSummaryModelAssembler;
 import edu.rutmiit.demo.diabetesapicontract.dto.*;
 import edu.rutmiit.demo.diabetesapicontract.endpoints.AppointmentApi;
 import edu.rutmiit.demo.demorest.assemblers.AppointmentModelAssembler;
@@ -13,17 +14,23 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 public class AppointmentController implements AppointmentApi {
 
     private final AppointmentService appointmentService;
     private final AppointmentModelAssembler appointmentModelAssembler;
+    private final AppSummaryModelAssembler appSummaryModelAssembler;
     private final PagedResourcesAssembler<AppointmentResponse> pagedResourcesAssembler;
 
     public AppointmentController(AppointmentService appointmentService, AppointmentModelAssembler appointmentModelAssembler,
+                                 AppSummaryModelAssembler appSummaryModelAssembler,
                                  PagedResourcesAssembler<AppointmentResponse> pagedResourcesAssembler) {
         this.appointmentService = appointmentService;
         this.appointmentModelAssembler = appointmentModelAssembler;
+        this.appSummaryModelAssembler = appSummaryModelAssembler;
         this.pagedResourcesAssembler = pagedResourcesAssembler;
     }
 
@@ -60,6 +67,13 @@ public class AppointmentController implements AppointmentApi {
     @Override
     public EntityModel<AppointmentResponse> patchAppointment(Long id, PatchAppointmentRequest request) {
         return appointmentModelAssembler.toModel(appointmentService.patchAppointment(id, request));
+    }
+
+    @Override
+    public List<EntityModel<AppSummaryResponse>> getAllAppsSummary() {
+        return appointmentService.getAppsSummary().stream()
+            .map(appSummaryModelAssembler::toModel)
+            .collect(Collectors.toList());
     }
 
     @Override
