@@ -123,7 +123,7 @@ public class PatientService {
     }
 
     public PatientResponse recalculateAppsCount(Long patientId) {
-        PatientResponse owner = storage.patients.get(patientId);
+        PatientResponse owner = findById(patientId);
         int appCount = storage.appointments.values().stream()
             .filter(appointment -> appointment.getPatient().getId().equals(patientId))
             .toList()

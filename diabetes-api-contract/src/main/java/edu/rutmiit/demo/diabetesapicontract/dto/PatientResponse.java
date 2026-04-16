@@ -1,6 +1,7 @@
 package edu.rutmiit.demo.diabetesapicontract.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -14,6 +15,7 @@ import org.springframework.hateoas.server.core.Relation;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Relation(collectionRelation = "patients", itemRelation = "patient")
 @Schema(description = "Информация о пациенте")
+@JsonPropertyOrder({"id", "lastName", "firstName", "middleName", "fullName", "age", "appCount"})
 public class PatientResponse extends RepresentationModel<PatientResponse> {
 
     @Schema(description = "Уникальный идентификатор пациента", example = "1")

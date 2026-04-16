@@ -1,6 +1,7 @@
 package edu.rutmiit.demo.diabetesapicontract.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Relation(collectionRelation = "appointments", itemRelation = "appointment")
 @Schema(description = "Информация о приеме")
+@JsonPropertyOrder({"id", "appointmentTime", "patient", "bloodSugar", "onDiet", "fasting", "createdAt", "updatedAt"})
 public class AppointmentResponse extends RepresentationModel<AppointmentResponse> {
 
     @Schema(description = "Уникальный идентификатор приема", example = "1")
