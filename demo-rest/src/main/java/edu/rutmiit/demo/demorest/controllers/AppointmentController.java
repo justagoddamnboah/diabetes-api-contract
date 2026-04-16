@@ -70,14 +70,14 @@ public class AppointmentController implements AppointmentApi {
     }
 
     @Override
+    public void deleteAppointment(Long id) {
+        appointmentService.deleteAppointment(id);
+    }
+
+    @Override
     public List<EntityModel<AppSummaryResponse>> getAllAppsSummary() {
         return appointmentService.getAppsSummary().stream()
             .map(appSummaryModelAssembler::toModel)
             .collect(Collectors.toList());
-    }
-
-    @Override
-    public void deleteAppointment(Long id) {
-        appointmentService.deleteAppointment(id);
     }
 }

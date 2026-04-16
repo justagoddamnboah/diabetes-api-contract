@@ -37,9 +37,75 @@ public class PatientService {
     }
 
     public PatientResponse findById(Long id) {
-        recalculateAppsCount(id);
         return Optional.ofNullable(storage.patients.get(id))
                 .orElseThrow(() -> new ResourceNotFoundException("Patient", id));
+    }
+
+    public PatientResponse create(PatientRequest request) {
+        long id = storage.patientSequence.incrementAndGet();
+        String fullName = request.firstName() + " " + request.lastName();
+        if (request.middleName() != null) {
+            fullName += " " + request.middleName();
+        }
+        PatientResponse patient = PatientResponse.builder()
+                .id(id)
+                .lastName(request.lastName())
+                .firstName(request.firstName())
+                .middleName(request.middleName())
+                .fullName(fullName)
+                .age(request.age())
+                .appCount(0)
+                .build();
+        storage.patients.put(id, patient);
+        return patient;
+    }
+
+    public PatientResponse update(Long id, PatientRequest request) {
+        PatientResponse existing = findById(id);
+        String fullName = request.lastName() + " " + request.firstName();
+        if (request.middleName() != null) {
+            fullName += " " +  request.middleName();
+        }
+        PatientResponse updatedPatient = PatientResponse.builder()
+            .id(id)
+            .lastName(request.lastName())
+            .firstName(request.firstName())
+            .middleName(request.middleName())
+            .fullName(fullName)
+            .age(request.age())
+            .appCount(existing.getAppCount())
+            .build();
+        storage.patients.put(id, updatedPatient);
+        return updatedPatient;
+    }
+
+    public PatientResponse patchPatient(Long id, PatchPatientRequest request) {
+        PatientResponse existing = findById(id);
+        String newFirstName = request.firstName() != null ? request.firstName() : existing.getFirstName();
+        String newLastName = request.lastName() != null ? request.lastName() : existing.getLastName();
+        String newMiddleName = request.middleName() != null ? request.middleName() : existing.getMiddleName();
+        String newFullName = newLastName + " " + newFirstName;
+        if (newMiddleName != null) {
+            newFullName += " " + newMiddleName;
+        }
+        PatientResponse updated = PatientResponse.builder()
+                .id(id)
+                .firstName(newFirstName)
+                .lastName(newLastName)
+                .middleName(newMiddleName)
+                .fullName(newFullName)
+                .age(request.age() != null ? request.age() : existing.getAge())
+                .appCount(existing.getAppCount())
+                .build();
+        storage.patients.put(id, updated);
+        return updated;
+    }
+
+    public PatientResponse delete(Long id) {
+        findById(id);
+        appointmentService.deleteAppointmentsByPatientId(id);
+        storage.patients.remove(id);
+        return PatientResponse.builder().id(id).build();
     }
 
     public PagedResponse<PatientResponse> searchByName(String query, int page, int size) {
@@ -74,68 +140,5 @@ public class PatientService {
 
         storage.patients.put(patientId, updated);
         return updated;
-    }
-
-    public PatientResponse create(PatientRequest request) {
-        long id = storage.patientSequence.incrementAndGet();
-        String fullName = request.firstName() + " " + request.lastName();
-        if (request.middleName() != null) {
-            fullName += " " + request.middleName();
-        }
-        PatientResponse patient = PatientResponse.builder()
-                .id(id)
-                .lastName(request.lastName())
-                .firstName(request.firstName())
-                .middleName(request.middleName())
-                .fullName(fullName)
-                .age(request.age())
-                .build();
-        storage.patients.put(id, patient);
-        return patient;
-    }
-
-    public PatientResponse update(Long id, PatientRequest request) {
-        String fullName = request.lastName() + " " + request.firstName();
-        if (request.middleName() != null) {
-            fullName += " " +  request.middleName();
-        }
-        PatientResponse updatedPatient = PatientResponse.builder()
-            .id(id)
-            .lastName(request.lastName())
-            .firstName(request.firstName())
-            .middleName(request.middleName())
-            .fullName(fullName)
-            .age(request.age())
-            .build();
-        storage.patients.put(id, updatedPatient);
-        return updatedPatient;
-    }
-
-    public PatientResponse patchPatient(Long id, PatchPatientRequest request) {
-        PatientResponse existing = findById(id);
-        String newFirstName = request.firstName() != null ? request.firstName() : existing.getFirstName();
-        String newLastName = request.lastName() != null ? request.lastName() : existing.getLastName();
-        String newMiddleName = request.middleName() != null ? request.middleName() : existing.getMiddleName();
-        String newFullName = newLastName + " " + newFirstName;
-        if (newMiddleName != null) {
-            newFullName += " " + newMiddleName;
-        }
-        PatientResponse updated = PatientResponse.builder()
-                .id(id)
-                .firstName(newFirstName)
-                .lastName(newLastName)
-                .middleName(newMiddleName)
-                .fullName(newFullName)
-                .age(request.age() != null ? request.age() : existing.getAge())
-                .build();
-        storage.patients.put(id, updated);
-        return updated;
-    }
-
-    public PatientResponse delete(Long id) {
-        findById(id);
-        appointmentService.deleteAppointmentsByPatientId(id);
-        storage.patients.remove(id);
-        return PatientResponse.builder().id(id).build();
     }
 }

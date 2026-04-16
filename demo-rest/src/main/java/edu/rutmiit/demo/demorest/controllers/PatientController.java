@@ -83,8 +83,15 @@ public class PatientController implements PatientApi {
     }
 
     @Override
-    public EntityModel<PatientResponse> recalculateAppsCount(Long id) {
-        return patientModelAssembler.toModel(patientService.recalculateAppsCount(id));
+    public PagedModel<EntityModel<AppointmentResponse>> getAppointmentsByPatient(Long id, int page, int size) {
+        patientService.findById(id);
+        PagedResponse<AppointmentResponse> paged = appointmentService.findAllAppointments(id, page, size);
+        Page<AppointmentResponse> springPage = new PageImpl<>(
+                paged.content(),
+                PageRequest.of(paged.pageNumber(), paged.pageSize()),
+                paged.totalElements()
+        );
+        return pagedAppointmentsAssembler.toModel(springPage, appointmentModelAssembler);
     }
 
     @Override
@@ -99,14 +106,7 @@ public class PatientController implements PatientApi {
     }
 
     @Override
-    public PagedModel<EntityModel<AppointmentResponse>> getAppointmentsByPatient(Long id, int page, int size) {
-        patientService.findById(id);
-        PagedResponse<AppointmentResponse> paged = appointmentService.findAllAppointments(id, page, size);
-        Page<AppointmentResponse> springPage = new PageImpl<>(
-                paged.content(),
-                PageRequest.of(paged.pageNumber(), paged.pageSize()),
-                paged.totalElements()
-        );
-        return pagedAppointmentsAssembler.toModel(springPage, appointmentModelAssembler);
+    public EntityModel<PatientResponse> recalculateAppsCount(Long id) {
+        return patientModelAssembler.toModel(patientService.recalculateAppsCount(id));
     }
 }

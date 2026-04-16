@@ -137,8 +137,8 @@ public class AppointmentService {
         return storage.appointments.values().stream()
             .map(app -> new AppSummaryResponse(
                 app.getId(),
-                app.getPatient(),
-                app.getAppointmentTime()
+                app.getAppointmentTime(),
+                app.getPatient()
             ))
             .collect(Collectors.toList());
     }

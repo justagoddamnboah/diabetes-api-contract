@@ -112,12 +112,31 @@ public interface PatientApi {
     );
 
     @Operation(
+        summary = "Приемы пациента (суб-ресурс)",
+        description = """
+                    Возвращает постраничный список приемов указанного пациента.
+                    Это суб-ресурс (концепция REST): /patients/{id}/appointments.
+                    Эквивалентен GET /appointments?patientId={id}, но точнее отражает иерархию.
+                    """,
+        security = @SecurityRequirement(name = DiabetesApiContractConfig.SECURITY_SCHEME_BEARER)
+    )
+    @ApiResponse(responseCode = "200", description = "Список приемов пациента")
+    @ApiResponse(responseCode = "404", description = "Пациент не найден",
+        content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @GetMapping("/{id}/appointments")
+    PagedModel<EntityModel<AppointmentResponse>> getAppointmentsByPatient(
+        @Parameter(description = "ID пациента", required = true, example = "1") @PathVariable Long id,
+        @Parameter(description = "Номер страницы (0..N)", example = "0") @RequestParam(defaultValue = "0") int page,
+        @Parameter(description = "Размер страницы", example = "20") @RequestParam(defaultValue = "20") int size
+    );
+
+    @Operation(
         summary = "Поиск пациентов по имени",
         description = "Возвращает постраничный список пациентов, отфильтрованных по имени.",
         security = @SecurityRequirement(name = DiabetesApiContractConfig.SECURITY_SCHEME_BEARER)
     )
     @ApiResponse(responseCode = "200", description = "Список пациентов")
-    @ApiResponse(responseCode = "404", description = "Пациенты не найден",
+    @ApiResponse(responseCode = "404", description = "Пациенты не найдены",
         content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @GetMapping("/search")
     PagedModel<EntityModel<PatientResponse>> searchByName(
@@ -132,29 +151,10 @@ public interface PatientApi {
         security = @SecurityRequirement(name = DiabetesApiContractConfig.SECURITY_SCHEME_BEARER)
     )
     @ApiResponse(responseCode = "200", description = "Пациент найден")
-    @ApiResponse(responseCode = "404", description = "Пациенты не найден",
+    @ApiResponse(responseCode = "404", description = "Пациент не найден",
         content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @GetMapping("/{id}/appCount")
     EntityModel<PatientResponse> recalculateAppsCount(
-        @Parameter(description = "ID Пациента", required = true, example = "1") @PathVariable Long id
-    );
-
-    @Operation(
-            summary = "Приемы пациента (суб-ресурс)",
-            description = """
-                    Возвращает постраничный список приемов указанного пациента.
-                    Это суб-ресурс (концепция REST): /patients/{id}/appointments.
-                    Эквивалентен GET /appointments?patientId={id}, но точнее отражает иерархию.
-                    """,
-            security = @SecurityRequirement(name = DiabetesApiContractConfig.SECURITY_SCHEME_BEARER)
-    )
-    @ApiResponse(responseCode = "200", description = "Список приемов пациента")
-    @ApiResponse(responseCode = "404", description = "Пациент не найден",
-            content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-    @GetMapping("/{id}/appointments")
-    PagedModel<EntityModel<AppointmentResponse>> getAppointmentsByPatient(
-            @Parameter(description = "ID пациента", required = true, example = "1") @PathVariable Long id,
-            @Parameter(description = "Номер страницы (0..N)", example = "0") @RequestParam(defaultValue = "0") int page,
-            @Parameter(description = "Размер страницы", example = "20") @RequestParam(defaultValue = "20") int size
+        @Parameter(description = "ID пациента", required = true, example = "1") @PathVariable Long id
     );
 }

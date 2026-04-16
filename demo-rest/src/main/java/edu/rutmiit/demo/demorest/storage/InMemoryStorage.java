@@ -27,6 +27,7 @@ public class InMemoryStorage {
             .middleName("Андреевич")
             .fullName("Горчаков Иван Андреевич")
             .age(32)
+            .appCount(1)
             .build();
 
         patients.put(patient1.getId(), patient1);
@@ -38,6 +39,7 @@ public class InMemoryStorage {
             .middleName("Петрович")
             .fullName("Петров Петр Петрович")
             .age(45)
+            .appCount(0)
             .build();
 
         patients.put(patient2.getId(), patient2);
