@@ -1,5 +1,6 @@
 package edu.rutmiit.demo.demorest.service;
 
+import edu.rutmiit.demo.demorest.event.AppointmentEventPublisher;
 import edu.rutmiit.demo.diabetesapicontract.dto.*;
 import edu.rutmiit.demo.diabetesapicontract.exception.AppointmentTimeAlreadyExistsException;
 import edu.rutmiit.demo.diabetesapicontract.exception.ResourceNotFoundException;
@@ -19,10 +20,14 @@ public class AppointmentService {
 
     private final InMemoryStorage storage;
     private final PatientService patientService;
+    private final AppointmentEventPublisher eventPublisher;
 
-    public AppointmentService(InMemoryStorage storage, @Lazy PatientService patientService) {
+    public AppointmentService(InMemoryStorage storage,
+                              @Lazy PatientService patientService,
+                              AppointmentEventPublisher eventPublisher) {
         this.storage = storage;
         this.patientService = patientService;
+        this.eventPublisher = eventPublisher;
     }
 
     public AppointmentResponse findAppointmentById(Long id) {
@@ -64,6 +69,7 @@ public class AppointmentService {
             .build();
         storage.appointments.put(id, appointment);
         patientService.recalculateAppsCount(patient.getId());
+        eventPublisher.publishCreated(appointment);
         return appointment;
     }
 
@@ -82,6 +88,7 @@ public class AppointmentService {
             .updatedAt(LocalDateTime.now())
             .build();
         storage.appointments.put(id, updated);
+        eventPublisher.publishUpdated(updated);
         return updated;
     }
 
@@ -103,6 +110,7 @@ public class AppointmentService {
             .createdAt(existing.getCreatedAt())
             .build();
         storage.appointments.put(id, updated);
+        eventPublisher.publishUpdated(updated);
         return updated;
     }
 
@@ -112,6 +120,7 @@ public class AppointmentService {
         findAppointmentById(id);
         storage.appointments.remove(id);
         patientService.recalculateAppsCount(patientId);
+        eventPublisher.publishDeleted(id, appointment.getAppointmentTime());
     }
 
     public void deleteAppointmentsByPatientId(Long patientId) {

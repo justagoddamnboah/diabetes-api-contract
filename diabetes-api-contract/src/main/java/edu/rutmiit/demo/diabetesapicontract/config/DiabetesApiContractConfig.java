@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 title = "Diabetes API",
                 version = "1.0.0",
                 description = """
-                        REST API для управления приемов на анализ уровня сахара в крови.
+                        REST API для управления приемами на анализ уровня сахара в крови.
                         """
         ),
         servers = {

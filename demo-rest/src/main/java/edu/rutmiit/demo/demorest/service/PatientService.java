@@ -1,6 +1,6 @@
 package edu.rutmiit.demo.demorest.service;
 
-
+import edu.rutmiit.demo.demorest.event.PatientEventPublisher;
 import edu.rutmiit.demo.demorest.storage.InMemoryStorage;
 import edu.rutmiit.demo.diabetesapicontract.dto.PagedResponse;
 import edu.rutmiit.demo.diabetesapicontract.dto.PatchPatientRequest;
@@ -18,10 +18,14 @@ import java.util.Optional;
 public class PatientService {
     private final InMemoryStorage storage;
     private final AppointmentService appointmentService;
+    private final PatientEventPublisher eventPublisher;
 
-    public PatientService(InMemoryStorage storage, @Lazy AppointmentService appointmentService) {
+    public PatientService(InMemoryStorage storage,
+                          @Lazy AppointmentService appointmentService,
+                          PatientEventPublisher eventPublisher) {
         this.storage = storage;
         this.appointmentService = appointmentService;
+        this.eventPublisher = eventPublisher;
     }
 
     public PagedResponse<PatientResponse> findAll(int page, int size) {
@@ -57,6 +61,7 @@ public class PatientService {
                 .appCount(0)
                 .build();
         storage.patients.put(id, patient);
+        eventPublisher.publishCreated(patient);
         return patient;
     }
 
@@ -102,9 +107,15 @@ public class PatientService {
     }
 
     public PatientResponse delete(Long id) {
-        findById(id);
+        PatientResponse patient = findById(id);
+
+        int appCount = (int) storage.appointments.values().stream()
+                .filter(a -> a.getPatient() != null && a.getPatient().getId().equals(id))
+                    .count();
+
         appointmentService.deleteAppointmentsByPatientId(id);
         storage.patients.remove(id);
+        eventPublisher.publishDeleted(patient, appCount);
         return PatientResponse.builder().id(id).build();
     }
 

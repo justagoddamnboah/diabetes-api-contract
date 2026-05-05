@@ -37,7 +37,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- Netflix DGS — BOM для управления версиями всех GraphQL-зависимостей -->
             <dependency>
                 <groupId>com.netflix.graphql.dgs</groupId>
                 <artifactId>graphql-dgs-platform-dependencies</artifactId>
@@ -93,16 +92,25 @@
             <artifactId>jakarta.annotation-api</artifactId>
         </dependency>
 
-        <!-- Netflix DGS — стартер для GraphQL на базе Spring for GraphQL -->
         <dependency>
             <groupId>com.netflix.graphql.dgs</groupId>
             <artifactId>graphql-dgs-spring-graphql-starter</artifactId>
         </dependency>
 
-        <!-- Расширенные скаляры GraphQL (DateTime, Date и другие) -->
         <dependency>
             <groupId>com.netflix.graphql.dgs</groupId>
             <artifactId>graphql-dgs-extended-scalars</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>edu.rutmiit.demo</groupId>
+            <artifactId>diabetes-events-contract</artifactId>
+            <version>1.0</version>
         </dependency>
 
     </dependencies>

@@ -23,8 +23,10 @@
 
     <modules>
         <module>diabetes-api-contract</module>
+        <module>diabetes-events-contract</module>
+
         <module>demo-rest</module>
-        <module>standalone_gq_demo</module>
+        <module>audit-service</module>
     </modules>
 
 </project>
