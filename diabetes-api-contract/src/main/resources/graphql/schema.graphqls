@@ -75,6 +75,10 @@ input UpdatePatientInput {
     age: Int!
 }
 
+input PatientFilter {
+    nameSearch: String
+}
+
 input AppointmentFilter {
     patientId: ID
     onDiet: Boolean
@@ -87,7 +91,7 @@ type Query {
     appointments(filter: AppointmentFilter, page: Int = 0, size: Int = 20): AppointmentConnection!
 
     patient(id: ID!): Patient
-    patients(page: Int = 0, size: Int = 20): PatientConnection!
+    patients(filter: PatientFilter, page: Int = 0, size: Int = 20): PatientConnection!
 }
 
 type Mutation {

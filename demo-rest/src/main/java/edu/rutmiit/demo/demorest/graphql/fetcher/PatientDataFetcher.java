@@ -4,11 +4,8 @@ import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsMutation;
 import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
-import edu.rutmiit.demo.demorest.graphql.types.UpdatePatientInputGql;
+import edu.rutmiit.demo.demorest.graphql.types.*;
 import edu.rutmiit.demo.diabetesapicontract.dto.PagedResponse;
-import edu.rutmiit.demo.demorest.graphql.types.PatientConnectionGql;
-import edu.rutmiit.demo.demorest.graphql.types.CreatePatientInputGql;
-import edu.rutmiit.demo.demorest.graphql.types.PageInfoGql;
 import edu.rutmiit.demo.demorest.service.PatientService;
 import edu.rutmiit.demo.diabetesapicontract.dto.PatientRequest;
 import edu.rutmiit.demo.diabetesapicontract.dto.PatientResponse;
@@ -29,13 +26,20 @@ public class PatientDataFetcher {
 
     @DgsQuery
     public PatientConnectionGql patients(
-            @InputArgument Integer page,
-            @InputArgument Integer size) {
+        @InputArgument PatientFilterGql filter,
+        @InputArgument Integer page,
+        @InputArgument Integer size) {
 
         int pageNum = page != null ? page : 0;
         int pageSize = size != null ? size : 20;
 
-        PagedResponse<PatientResponse> paged = patientService.findAll(pageNum, pageSize);
+        String nameSearch = null;
+
+        if (filter != null) {
+            nameSearch = filter.nameSearch();
+        }
+
+        PagedResponse<PatientResponse> paged = patientService.findAll(nameSearch, pageNum, pageSize);
 
         return new PatientConnectionGql(
                 paged.content(),

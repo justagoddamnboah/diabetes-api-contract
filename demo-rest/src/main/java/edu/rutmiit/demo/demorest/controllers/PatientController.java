@@ -45,7 +45,7 @@ public class PatientController implements PatientApi {
 
     @Override
     public PagedModel<EntityModel<PatientResponse>> getAllPatients(int page, int size) {
-        PagedResponse<PatientResponse> paged = patientService.findAll(page, size);
+        PagedResponse<PatientResponse> paged = patientService.findAll(null, page, size);
         Page<PatientResponse> springPage = new PageImpl<>(
                 paged.content(),
                 PageRequest.of(paged.pageNumber(), paged.pageSize()),

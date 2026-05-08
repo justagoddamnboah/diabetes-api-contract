@@ -28,10 +28,19 @@ public class PatientService {
         this.eventPublisher = eventPublisher;
     }
 
-    public PagedResponse<PatientResponse> findAll(int page, int size) {
+    public PagedResponse<PatientResponse> findAll(String nameSearch, int page, int size) {
         List<PatientResponse> all = storage.patients.values().stream()
                 .sorted(Comparator.comparingLong(PatientResponse::getId))
                 .toList();
+
+        if (nameSearch != null && !nameSearch.isBlank()) {
+            String q = nameSearch.toLowerCase();
+
+            all = all.stream()
+                .filter(s -> s.getFullName() != null && s.getFullName().contains(q))
+                .toList();
+        }
+
         int totalElements = all.size();
         int totalPages = size > 0 ? (int) Math.ceil((double) totalElements / size) : 1;
         int from = page * size;
