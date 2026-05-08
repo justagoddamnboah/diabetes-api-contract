@@ -44,8 +44,8 @@ public class PatientController implements PatientApi {
     }
 
     @Override
-    public PagedModel<EntityModel<PatientResponse>> getAllPatients(int page, int size) {
-        PagedResponse<PatientResponse> paged = patientService.findAll(null, page, size);
+    public PagedModel<EntityModel<PatientResponse>> getAllPatients(String nameSearch, int page, int size) {
+        PagedResponse<PatientResponse> paged = patientService.findAll(nameSearch, page, size);
         Page<PatientResponse> springPage = new PageImpl<>(
                 paged.content(),
                 PageRequest.of(paged.pageNumber(), paged.pageSize()),
@@ -92,17 +92,6 @@ public class PatientController implements PatientApi {
                 paged.totalElements()
         );
         return pagedAppointmentsAssembler.toModel(springPage, appointmentModelAssembler);
-    }
-
-    @Override
-    public PagedModel<EntityModel<PatientResponse>> searchByName(String query, int page, int size) {
-        PagedResponse<PatientResponse> paged = patientService.searchByName(query, page, size);
-        Page<PatientResponse> singlePage = new PageImpl<>(
-            paged.content(),
-            PageRequest.of(paged.pageNumber(), paged.pageSize()),
-            paged.totalElements()
-        );
-        return pagedPatientsAssembler.toModel(singlePage, patientModelAssembler);
     }
 
     @Override

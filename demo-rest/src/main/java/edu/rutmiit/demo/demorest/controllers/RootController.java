@@ -15,7 +15,7 @@ public class RootController {
     public RepresentationModel<?> getRoot() {
         RepresentationModel<?> rootModel = new RepresentationModel<>();
         rootModel.add(
-                linkTo(methodOn(PatientController.class).getAllPatients(0, 20)).withRel("patients"),
+                linkTo(methodOn(PatientController.class).getAllPatients(null, 0, 20)).withRel("patients"),
                 linkTo(methodOn(AppointmentController.class).getAllAppointments(null, 0, 20)).withRel("appointments")
         );
         return rootModel;

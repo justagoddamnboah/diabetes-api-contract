@@ -37,7 +37,7 @@ public class PatientService {
             String q = nameSearch.toLowerCase();
 
             all = all.stream()
-                .filter(s -> s.getFullName() != null && s.getFullName().contains(q))
+                .filter(s -> s.getFullName() != null && s.getFullName().toLowerCase().contains(q))
                 .toList();
         }
 
@@ -126,20 +126,6 @@ public class PatientService {
         storage.patients.remove(id);
         eventPublisher.publishDeleted(patient, appCount);
         return PatientResponse.builder().id(id).build();
-    }
-
-    public PagedResponse<PatientResponse> searchByName(String query, int page, int size) {
-        List<PatientResponse> filtered = storage.patients.values()
-            .stream()
-            .sorted(Comparator.comparingLong(PatientResponse::getId))
-            .filter(patient -> patient.getFullName().toLowerCase().contains(query.toLowerCase()))
-            .toList();
-        int totalElements = filtered.size();
-        int totalPages = size > 0 ? (int) Math.ceil((double) totalElements / size) : 1;
-        int from = page * size;
-        int to = Math.min(from + size, totalElements);
-        List<PatientResponse> content = (from >= totalElements) ? List.of() : filtered.subList(from, to);
-        return new PagedResponse<>(content, page, size, totalElements, totalPages, page >= totalPages - 1);
     }
 
     public PatientResponse recalculateAppsCount(Long patientId) {

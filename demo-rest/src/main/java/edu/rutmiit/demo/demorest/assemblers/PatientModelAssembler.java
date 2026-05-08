@@ -18,10 +18,9 @@ public class PatientModelAssembler implements RepresentationModelAssembler<Patie
         return EntityModel.of(patient,
                 linkTo(methodOn(PatientController.class).getPatientById(patient.getId())).withSelfRel(),
                 linkTo(methodOn(AppointmentController.class).getAllAppointments(patient.getId(), 0, 20)).withRel("appointments"),
-                linkTo(methodOn(PatientController.class).getAllPatients(0, 20)).withRel("collection"),
+                linkTo(methodOn(PatientController.class).getAllPatients(patient.getFullName(), 0, 20)).withRel("collection"),
                 linkTo(methodOn(PatientController.class).updatePatient(patient.getId(), null)).withRel("update"),
-                linkTo(methodOn(PatientController.class).deletePatient(patient.getId())).withRel("delete"),
-                linkTo(methodOn(PatientController.class).searchByName(patient.getFullName(), 0, 20)).withRel("search")
+                linkTo(methodOn(PatientController.class).deletePatient(patient.getId())).withRel("delete")
         );
     }
 }

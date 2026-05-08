@@ -33,6 +33,8 @@ public interface PatientApi {
     @ApiResponse(responseCode = "200", description = "Список пациентов")
     @GetMapping
     PagedModel<EntityModel<PatientResponse>> getAllPatients(
+            @Parameter(description = "Поиск по имени", example = "Иван")
+            @RequestParam(defaultValue = "") String nameSearch,
             @Parameter(description = "Номер страницы (0..N)", example = "0")
             @RequestParam(defaultValue = "0") int page,
             @Parameter(description = "Размер страницы", example = "20")
@@ -126,21 +128,6 @@ public interface PatientApi {
     @GetMapping("/{id}/appointments")
     PagedModel<EntityModel<AppointmentResponse>> getAppointmentsByPatient(
         @Parameter(description = "ID пациента", required = true, example = "1") @PathVariable Long id,
-        @Parameter(description = "Номер страницы (0..N)", example = "0") @RequestParam(defaultValue = "0") int page,
-        @Parameter(description = "Размер страницы", example = "20") @RequestParam(defaultValue = "20") int size
-    );
-
-    @Operation(
-        summary = "Поиск пациентов по имени",
-        description = "Возвращает постраничный список пациентов, отфильтрованных по имени.",
-        security = @SecurityRequirement(name = DiabetesApiContractConfig.SECURITY_SCHEME_BEARER)
-    )
-    @ApiResponse(responseCode = "200", description = "Список пациентов")
-    @ApiResponse(responseCode = "404", description = "Пациенты не найдены",
-        content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-    @GetMapping("/search")
-    PagedModel<EntityModel<PatientResponse>> searchByName(
-        @Parameter(description = "Ввод", required = true, example = "Иван") @RequestParam String query,
         @Parameter(description = "Номер страницы (0..N)", example = "0") @RequestParam(defaultValue = "0") int page,
         @Parameter(description = "Размер страницы", example = "20") @RequestParam(defaultValue = "20") int size
     );
