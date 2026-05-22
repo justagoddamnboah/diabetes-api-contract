@@ -24,4 +24,10 @@ public sealed interface AppointmentEvent {
             Long appId,
             String appointmentTime
     ) implements AppointmentEvent {}
+
+    record Analyzed(
+            Long appId,
+            String appTime,
+            String diagnosis
+    ) implements AppointmentEvent {}
 }

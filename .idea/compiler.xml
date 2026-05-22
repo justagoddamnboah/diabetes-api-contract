@@ -7,9 +7,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="grpc-analytics-server" />
         <module name="demo-rest" />
         <module name="audit-service" />
+        <module name="diabetes-grpc-contract" />
         <module name="diabetes-events-contract" />
+        <module name="grpc-diagnosis-client" />
       </profile>
       <profile name="Annotation profile for demo-rest [root aggregator]" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -37,7 +40,10 @@
       <module name="demo-rest (1)" options="-parameters" />
       <module name="demo-rest (2)" options="-parameters" />
       <module name="diabetes-api-contract" options="-parameters" />
+      <module name="diabetes-grpc-contract" options="-parameters" />
       <module name="graphql-demo" options="-parameters" />
+      <module name="grpc-analytics-server" options="-parameters" />
+      <module name="grpc-diagnosis-client" options="-parameters" />
     </option>
   </component>
 </project>

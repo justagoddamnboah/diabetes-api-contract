@@ -11,6 +11,7 @@ public final class RoutingKeys {
     public static final String APPOINTMENT_CREATED = "appointment.created";
     public static final String APPOINTMENT_UPDATED = "appointment.updated";
     public static final String APPOINTMENT_DELETED = "appointment.deleted";
+    public static final String APPOINTMENT_DIAGNOSED = "appointment.diagnosed";
 
     public static final String PATIENT_CREATED = "patient.created";
     public static final String PATIENT_DELETED = "patient.deleted";

@@ -13,9 +13,13 @@
     <modules>
         <module>diabetes-api-contract</module>
         <module>diabetes-events-contract</module>
+        <module>diabetes-grpc-contract</module>
 
         <module>demo-rest</module>
         <module>audit-service</module>
+
+        <module>grpc-analytics-server</module>
+        <module>grpc-diagnosis-client</module>
     </modules>
 
 </project>
