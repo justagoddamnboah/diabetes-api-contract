@@ -7,7 +7,7 @@
     <!--
         Контракт gRPC-сервиса — .proto файлы + сгенерированные Java-стабы.
         Используется двумя сторонами и gRPC-сервером (grpc-analytics-server)
-        и gRPC-клиентом (grpc-enrichment-client).
+        и gRPC-клиентом (grpc-diagnosis-client).
 
         Аналогично diabetes-api-contract для REST и diabetes-events-contract для событий —
         контракт выделяется в отдельный модуль, чтобы обе стороны зависели

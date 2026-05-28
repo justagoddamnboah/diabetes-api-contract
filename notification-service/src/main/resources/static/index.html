@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Центр уведомлений</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+
+    <body>
+        <header class="header">
+            <div class="header-left">
+                <div class="header-logo">🔔</div>
+                <div>
+                    <div class="header-title">Центр уведомлений</div>
+                    <div class="header-subtitle">
+                        notification-service · WebSocket · RabbitMQ
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="badge" id="badge">0</div>
+                <div class="status disconnected" id="status">
+                    <div class="status-dot"></div>
+                    <span id="status-text">Отключено</span>
+                </div>
+                <button class="btn btn-danger" onclick="clearAll()">
+                    Очистить
+                </button>
+            </div>
+        </header>
+
+        <main class="container">
+            <div id="empty-state" class="empty-state">
+                <div class="empty-state-icon">🔕</div>
+                <div class="empty-state-text">Нет уведомлений</div>
+                <div class="empty-state-hint">
+                    Создайте пациента или прием через REST API (POST
+                    http://localhost:8080/api/patients), и уведомления появятся
+                    здесь в реальном времени :)
+                </div>
+            </div>
+            <div id="notifications"></div>
+
+            <div class="log-toggle">
+                <button class="btn" onclick="toggleLog()">
+                    Показать лог подключения
+                </button>
+            </div>
+            <div class="log-area" id="log-area"></div>
+        </main>
+        <script src="scripts.js"></script>
+    </body>
+</html>

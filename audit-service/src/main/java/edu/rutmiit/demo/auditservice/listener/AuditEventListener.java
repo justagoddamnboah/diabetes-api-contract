@@ -89,9 +89,9 @@ public class AuditEventListener {
                         e.fullName(), e.deletedAppsCount());
             }
             case "appointment.diagnosed" -> {
-                AppointmentEvent.Analyzed e = jsonMapper.treeToValue(payloadNode, AppointmentEvent.Analyzed.class);
+                AppointmentEvent.Diagnosed e = jsonMapper.treeToValue(payloadNode, AppointmentEvent.Diagnosed.class);
                 yield String.format("Прием проанализирован id=%d [%s] (Диагноз: %s)",
-                    e.appId(), e.appTime(), e.diagnosis());
+                    e.appId(), e.appointmentTime(), e.diagnosis());
             }
             default -> "Неизвестное событие: " + eventType;
         };

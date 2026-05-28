@@ -9,68 +9,53 @@
         <relativePath/>
     </parent>
     <groupId>edu.rutmiit.demo</groupId>
-    <artifactId>grpc-diagnosis-client</artifactId>
+    <artifactId>notification-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>grpc-diagnosis-client</name>
-    <description>gRPC-клиент диагностирования — слушает appointment.created из RabbitMQ, вызывает gRPC-сервер, публикует appointment.diagnosed</description>
+    <name>notification-service</name>
+    <description>Сервис уведомлений</description>
 
     <properties>
         <java.version>17</java.version>
-        <grpc.version>1.66.0</grpc.version>
     </properties>
 
     <dependencies>
 
-        <!-- Spring Boot Web — для actuator и health endpoints -->
+        <!-- Spring WebSocket -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
 
-        <!-- Spring AMQP — интеграция с RabbitMQ (consumer + publisher) -->
+        <!-- Spring AMQP интеграция с RabbitMQ (consumer) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
 
-        <!-- Actuator — health-проверки -->
+        <!-- Web-стартер для статической страницы Notification Center -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- Actuator для health checks -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
-        <!-- gRPC-контракт — сгенерированные стабы из .proto -->
-        <dependency>
-            <groupId>edu.rutmiit.demo</groupId>
-            <artifactId>diabetes-grpc-contract</artifactId>
-            <version>1.0</version>
-        </dependency>
-
-        <!-- Контракт доменных событий — AppEvent, EventEnvelope, RoutingKeys -->
+        <!-- Контракт доменных событий -->
         <dependency>
             <groupId>edu.rutmiit.demo</groupId>
             <artifactId>diabetes-events-contract</artifactId>
             <version>1.0</version>
         </dependency>
 
-        <!--
-            gRPC Netty Shaded — транспорт для gRPC-клиента.
-            Тот же артефакт, что и у сервера — Netty используется и для
-            клиентских, и для серверных соединений.
-        -->
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-netty-shaded</artifactId>
-            <version>${grpc.version}</version>
-        </dependency>
-
-        <!-- Jackson — сериализация/десериализация JSON в RabbitMQ-сообщениях -->
+        <!-- Jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
-
-        <!-- Поддержка java.time (Instant, LocalDateTime) в Jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>

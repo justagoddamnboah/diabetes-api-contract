@@ -20,10 +20,10 @@ public class DiagnosisEventPublisher {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void publishDiagnosed(AppointmentEvent.Analyzed analyzedEvent) {
+    public void publishDiagnosed(AppointmentEvent.Diagnosed diagnosedEvent) {
         try {
             EventEnvelope<AppointmentEvent> envelope = EventEnvelope.wrap(
-                analyzedEvent, SOURCE, RoutingKeys.APPOINTMENT_DIAGNOSED);
+                diagnosedEvent, SOURCE, RoutingKeys.APPOINTMENT_DIAGNOSED);
 
             rabbitTemplate.convertAndSend(
                 RoutingKeys.EXCHANGE,
@@ -32,7 +32,7 @@ public class DiagnosisEventPublisher {
 
             log.info("Событие отправлено: {} [appId={}, eventId={}]",
                 RoutingKeys.APPOINTMENT_DIAGNOSED,
-                analyzedEvent.appId(),
+                diagnosedEvent.appId(),
                 envelope.metadata().eventId());
 
         } catch (Exception e) {

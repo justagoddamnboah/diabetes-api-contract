@@ -60,7 +60,7 @@ public class AppCreatedListener {
                     grpcResponse.getAppId(),
                     grpcResponse.getDiagnosis());
 
-            AppointmentEvent.Analyzed diagnosedEvent = new AppointmentEvent.Analyzed(
+            AppointmentEvent.Diagnosed diagnosedEvent = new AppointmentEvent.Diagnosed(
                     grpcResponse.getAppId(),
                     appCreated.appointmentTime(),
                     grpcResponse.getDiagnosis()
