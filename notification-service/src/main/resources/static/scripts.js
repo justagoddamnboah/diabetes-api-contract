@@ -1,4 +1,4 @@
-const WS_URL = `ws:
+const WS_URL = `ws://localhost:8084/ws/notifications`;
         const RECONNECT_BASE_MS = 1000;
         const RECONNECT_MAX_MS = 30000;
 
