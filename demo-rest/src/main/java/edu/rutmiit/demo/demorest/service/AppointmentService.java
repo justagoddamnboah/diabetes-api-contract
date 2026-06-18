@@ -147,7 +147,7 @@ public class AppointmentService {
             .map(app -> new AppSummaryResponse(
                 app.getId(),
                 app.getAppointmentTime(),
-                app.getPatient()
+                app.getPatient().getId()
             ))
             .collect(Collectors.toList());
     }

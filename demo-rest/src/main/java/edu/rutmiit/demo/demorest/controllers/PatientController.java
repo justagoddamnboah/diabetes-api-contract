@@ -93,9 +93,4 @@ public class PatientController implements PatientApi {
         );
         return pagedAppointmentsAssembler.toModel(springPage, appointmentModelAssembler);
     }
-
-    @Override
-    public EntityModel<PatientResponse> recalculateAppsCount(Long id) {
-        return patientModelAssembler.toModel(patientService.recalculateAppsCount(id));
-    }
 }

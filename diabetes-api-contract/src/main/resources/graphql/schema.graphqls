@@ -6,7 +6,7 @@ type Patient {
     id: ID!
     firstName: String!
     lastName: String!
-    middleName: String!
+    middleName: String
     fullName: String!
     age: Int!
 
@@ -17,8 +17,8 @@ type Appointment {
     id: ID!
     bloodSugar: Float
     appointmentTime: String!
-    onDiet: Boolean
-    fasting: Boolean
+    onDiet: Boolean!
+    fasting: Boolean!
     createdAt: DateTime
     updatedAt: DateTime
 
@@ -50,13 +50,13 @@ input CreateAppointmentInput {
     bloodSugar: Float
     appointmentTime: String!
     patientId: ID!
-    onDiet: Boolean
-    fasting: Boolean
+    onDiet: Boolean!
+    fasting: Boolean!
 }
 
 input UpdateAppointmentInput {
-    bloodSugar: Float
-    appointmentTime: String!
+    bloodSugar: Float!
+    appointmentTime: String
     onDiet: Boolean
     fasting: Boolean
 }
@@ -69,9 +69,9 @@ input CreatePatientInput {
 }
 
 input UpdatePatientInput {
-    firstName: String!
-    lastName: String!
-    middleName: String!
+    firstName: String
+    lastName: String
+    middleName: String
     age: Int!
 }
 

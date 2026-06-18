@@ -7,11 +7,11 @@
 .\mvnw -pl demo-rest spring-boot:run -DskipTests
 ### Аудит (c RabbitMQ):
 .\mvnw -pl audit-service spring-boot:run -DskipTests
-### gRPC-сервер аналитики:
-.\mvnw spring-boot:run -pl grpc-analytics-server -DskipTests
 ### gRPC-клиент диагностирования:
-.\mvnw spring-boot:run -pl grpc-diagnosis-client -DskipTests
-### notification-service (WebSocket push):
+.\mvnw spring-boot:run -pl diagnosis-grpc-client -DskipTests
+### gRPC-сервер диагностирования:
+.\mvnw spring-boot:run -pl diagnosis-grpc-server -DskipTests
+### PUSH-уведомления (WebSocket):
 .\mvnw spring-boot:run -pl notification-service -DskipTests
 ## URL
 ### SwaggerUI:

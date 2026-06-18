@@ -17,11 +17,8 @@
 
         <module>demo-rest</module>
         <module>audit-service</module>
-
-        <module>grpc-analytics-server</module>
-        <module>grpc-diagnosis-client</module>
-
+        <module>diagnosis-grpc-client</module>
+        <module>diagnosis-grpc-server</module>
         <module>notification-service</module>
     </modules>
-
 </project>

@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     <groupId>edu.rutmiit.demo</groupId>
-    <artifactId>grpc-analytics-server</artifactId>
+    <artifactId>diagnosis-grpc-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>grpc-analytics-server</name>
     <description>gRPC-сервер аналитики приемов — принимает gRPC-запросы и вычисляет метрики</description>

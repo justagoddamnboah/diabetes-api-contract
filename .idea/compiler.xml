@@ -7,11 +7,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="grpc-analytics-server" />
-        <module name="demo-rest" />
+        <module name="diagnosis-grpc-server" />
         <module name="audit-service" />
         <module name="diabetes-events-contract" />
-        <module name="grpc-diagnosis-client" />
+        <module name="diagnosis-grpc-client" />
+        <module name="demo-rest" />
+        <module name="diabetes-grpc-contract" />
         <module name="notification-service" />
       </profile>
       <profile name="Annotation profile for demo-rest [root aggregator]" enabled="true">
@@ -22,12 +23,6 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
         <module name="diabetes-api-contract" />
-      </profile>
-      <profile name="Annotation profile for diabetes-grpc-contract" enabled="true">
-        <sourceOutputDir name="../target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="diabetes-grpc-contract" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -47,9 +42,9 @@
       <module name="demo-rest (2)" options="-parameters" />
       <module name="diabetes-api-contract" options="-parameters" />
       <module name="diabetes-grpc-contract" options="-parameters" />
+      <module name="diagnosis-grpc-client" options="-parameters" />
+      <module name="diagnosis-grpc-server" options="-parameters" />
       <module name="graphql-demo" options="-parameters" />
-      <module name="grpc-analytics-server" options="-parameters" />
-      <module name="grpc-diagnosis-client" options="-parameters" />
       <module name="notification-service" options="-parameters" />
     </option>
   </component>

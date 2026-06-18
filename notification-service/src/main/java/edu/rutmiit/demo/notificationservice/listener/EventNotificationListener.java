@@ -81,14 +81,12 @@ public class EventNotificationListener {
             case "appointment.created"   -> "Новый прием";
             case "appointment.updated"   -> "Прием обновлен";
             case "appointment.deleted"   -> "Прием удален";
-            case "appointment.diagnosed"  -> "Постановка диагноза";
-            case "patient.created" -> "Новый пациент";
-            case "patient.deleted" -> "Пациент удалён";
-            default               -> "Событие: " + eventType;
+            case "appointment.diagnosed" -> "Постановка диагноза";
+            case "patient.created"       -> "Новый пациент";
+            case "patient.deleted"       -> "Пациент удалён";
+            default                      -> "Событие: " + eventType;
         };
     }
-
-    // Формирование описания
 
     private String buildDescription(String eventType, JsonNode payload) {
         try {
@@ -144,7 +142,7 @@ public class EventNotificationListener {
         return switch (eventType) {
             case "appointment.deleted", "patient.deleted" -> "warning";
             case "appointment.diagnosed"                  -> "info";
-            default                               -> "success";
+            default                                       -> "success";
         };
     }
 

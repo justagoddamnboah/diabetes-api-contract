@@ -4,11 +4,11 @@ import edu.rutmiit.demo.diabetesapicontract.validation.ValidAppointmentTime;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Полное обновление приема (PUT). Все обязательные поля должны присутствовать. "
-        + "Автор книги не меняется.")
+        + "Пациент приема не меняется.")
 public record UpdateAppointmentRequest(
 
-    @ValidAppointmentTime
     @Schema(description = "Новое время приема", example = "2025-06-14 11:15:00")
+    @ValidAppointmentTime
     String appointmentTime,
 
     @Schema(description = "Новый уровень сахара", example = "5.1")

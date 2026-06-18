@@ -11,10 +11,10 @@ service AppAnalytics {
 }
 
 message AnalyzeAppRequest {
-    int64  app_id         = 1;
-    float  bloodSugar     = 2;
-    bool onDiet        = 3;
-    bool fasting       = 4;
+    int64  app_id     = 1;
+    float  bloodSugar = 2;
+    bool onDiet       = 3;
+    bool fasting      = 4;
 }
 
 message AppAnalysisResponse {

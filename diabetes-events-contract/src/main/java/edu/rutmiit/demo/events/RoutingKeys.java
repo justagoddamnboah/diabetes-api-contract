@@ -6,7 +6,7 @@ public final class RoutingKeys {
 
     }
 
-    public static final String EXCHANGE = "appointments.events";
+    public static final String EXCHANGE = "diabetes.events";
 
     public static final String APPOINTMENT_CREATED = "appointment.created";
     public static final String APPOINTMENT_UPDATED = "appointment.updated";

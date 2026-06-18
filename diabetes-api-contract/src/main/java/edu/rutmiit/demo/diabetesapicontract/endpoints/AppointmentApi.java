@@ -50,7 +50,7 @@ public interface AppointmentApi {
     @ApiResponse(responseCode = "200", description = "Постраничный список приемов")
     @GetMapping
     PagedModel<EntityModel<AppointmentResponse>> getAllAppointments(
-            @Parameter(description = "Фильтр по ID пациента") @RequestParam(required = false) Long patientId,
+            @Parameter(description = "Фильтр по ID пациента", example = "1") @RequestParam(required = false) Long patientId,
             @Parameter(description = "Номер страницы (0..N)", example = "0") @RequestParam(defaultValue = "0") int page,
             @Parameter(description = "Размер страницы", example = "20") @RequestParam(defaultValue = "20") int size
     );
@@ -123,7 +123,11 @@ public interface AppointmentApi {
             @Parameter(description = "ID приема", required = true, example = "1") @PathVariable Long id
     );
 
-    @Operation(summary = "Краткий список всех приемов (без деталей)")
+    @Operation(
+        summary = "Краткий список всех приемов (без деталей)",
+        security = @SecurityRequirement(name = DiabetesApiContractConfig.SECURITY_SCHEME_BEARER)
+    )
+    @ApiResponse(responseCode = "200", description = "Постраничный список приемов (без деталей)")
     @GetMapping("/summary")
     List<EntityModel<AppSummaryResponse>> getAllAppsSummary();
 }

@@ -24,6 +24,6 @@ public class AppSummaryResponse extends RepresentationModel<AppSummaryResponse> 
     @Schema(description = "Запланированное время приема", example = "2025-06-14 10:15:00")
     private final String appointmentTime;
 
-    @Schema(description = "Пациент на этом приеме")
-    private final PatientResponse patient;
+    @Schema(description = "ID Пациента на этом приеме")
+    private final Long patientId;
 }

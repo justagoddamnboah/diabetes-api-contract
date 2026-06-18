@@ -16,7 +16,7 @@ public class InMemoryStorage {
     public final Map<Long, AppointmentResponse> appointments = new ConcurrentHashMap<>();
 
     public final AtomicLong patientSequence = new AtomicLong(0);
-    public final AtomicLong appointmentSequence = new AtomicLong(1);
+    public final AtomicLong appointmentSequence = new AtomicLong(0);
 
     @PostConstruct
     public void init() {

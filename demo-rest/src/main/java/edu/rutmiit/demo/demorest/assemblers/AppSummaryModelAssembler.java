@@ -16,7 +16,7 @@ public class AppSummaryModelAssembler implements RepresentationModelAssembler<Ap
     public EntityModel<AppSummaryResponse> toModel(AppSummaryResponse appointment) {
         EntityModel<AppSummaryResponse> model = EntityModel.of(appointment,
             linkTo(methodOn(AppointmentController.class).getAppointmentById(appointment.getId())).withSelfRel(),
-            linkTo(methodOn(AppointmentController.class).getAllAppsSummary()).withRel("collection")
+            linkTo(methodOn(AppointmentController.class).getAllAppointments(null, 0, 20)).withRel("enhanced collection")
         );
         return model;
     }
