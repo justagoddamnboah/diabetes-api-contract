@@ -12,10 +12,12 @@ public record AppointmentRequest(
         Long patientId,
 
         @Schema(description = "Запланированное время приема", example = "2025-06-14 10:15:00")
+        @NotNull(message = "Прием должен иметь время")
         @ValidAppointmentTime
         String appointmentTime,
 
         @Schema(description = "Уровень сахара в крови, ммоль/л", example = "5.6")
+        @NotNull(message = "Уровень сахара должен быть измерен")
         @Min(value = 3, message = "Пациент с таким уровнем сахара должен лежать в реанимации")
         @Max(value = 12, message = "Пациент с таким уровнем сахара должен лежать в реанимации")
         float bloodSugar,

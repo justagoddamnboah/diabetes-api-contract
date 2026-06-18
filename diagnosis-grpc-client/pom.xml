@@ -11,7 +11,7 @@
     <groupId>edu.rutmiit.demo</groupId>
     <artifactId>diagnosis-grpc-client</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>grpc-diagnosis-client</name>
+    <name>diagnosis-grpc-client</name>
     <description>gRPC-клиент диагностирования — слушает appointment.created из RabbitMQ, вызывает gRPC-сервер, публикует appointment.diagnosed</description>
 
     <properties>

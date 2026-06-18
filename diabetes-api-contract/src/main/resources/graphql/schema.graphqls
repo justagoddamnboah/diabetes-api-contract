@@ -15,7 +15,7 @@ type Patient {
 
 type Appointment {
     id: ID!
-    bloodSugar: Float
+    bloodSugar: Float!
     appointmentTime: String!
     onDiet: Boolean!
     fasting: Boolean!
@@ -47,7 +47,7 @@ type PageInfo {
 
 
 input CreateAppointmentInput {
-    bloodSugar: Float
+    bloodSugar: Float!
     appointmentTime: String!
     patientId: ID!
     onDiet: Boolean!
